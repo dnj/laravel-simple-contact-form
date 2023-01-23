@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'route_enable' => false,
-    'route_prefix' => null,
+    'route_enable' => true,
+    'route_prefix' => 'api',
 ];

@@ -1,11 +1,17 @@
 <?php
 
-namespace dnj\LaravelSimpleContactForm\Test;
+namespace dnj\SimpleContactForm\Database\Factories;
 
+use dnj\SimpleContactForm\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Contact>
+ */
 class ContactFactory extends Factory
 {
+    protected $model = Contact::class;
+
     public function definition()
     {
         return [

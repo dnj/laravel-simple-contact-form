@@ -1,8 +1,8 @@
 <?php
 
-namespace dnj\LaravelSimpleContactForm\Test\Models;
+namespace dnj\SimpleContactForm\Test\Models;
 
-use dnj\LaravelSimpleContactForm\Test\Factories\UserFactory;
+use dnj\SimpleContactForm\Test\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as BaseUser;
 

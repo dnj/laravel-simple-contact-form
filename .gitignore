@@ -1,1 +1,6 @@
-/vendor/
+/coverage
+/vendor
+/.phpunit.cache
+/junit.xml
+/.php-cs-fixer.cache
+/.phpunit.result.cache

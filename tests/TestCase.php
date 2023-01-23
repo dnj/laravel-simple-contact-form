@@ -1,9 +1,9 @@
 <?php
 
-namespace dnj\LaravelSimpleContactForm\Test;
+namespace dnj\SimpleContactForm\Test;
 
-use dnj\LaravelSimpleContactForm\LaravelSimpleContactFormServiceProvider;
 use dnj\SimpleContactForm\Contracts\IFormManager;
+use dnj\SimpleContactForm\SimpleContactFormServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -23,7 +23,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            LaravelSimpleContactFormServiceProvider::class,
+            SimpleContactFormServiceProvider::class,
         ];
     }
 

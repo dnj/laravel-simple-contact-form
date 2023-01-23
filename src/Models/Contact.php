@@ -1,12 +1,17 @@
 <?php
 
-namespace dnj\LaravelSimpleContactForm;
+namespace dnj\SimpleContactForm\Models;
 
 use dnj\SimpleContactForm\Contracts\IFormEntry;
+use dnj\SimpleContactForm\Database\Factories\ContactFactory;
+use dnj\UserLogger\Concerns\Loggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model implements IFormEntry
 {
+    use HasFactory;
+    use Loggable;
     protected $fillable = [
         'user_ip',
         'contact_channels',
@@ -49,5 +54,10 @@ class Contact extends Model implements IFormEntry
     public function getAdditionalDetails(): array
     {
         return $this->additional_details;
+    }
+
+    protected static function newFactory()
+    {
+        return ContactFactory::new();
     }
 }

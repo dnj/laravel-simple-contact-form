@@ -1,17 +1,18 @@
 <?php
 
-namespace dnj\LaravelSimpleContactForm;
+namespace dnj\SimpleContactForm;
 
 use dnj\SimpleContactForm\Contracts\IFormManager;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class LaravelSimpleContactFormServiceProvider extends ServiceProvider
+class SimpleContactFormServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/contact.php', 'contact');
-        $this->app->singleton(IFormManager::class, LaravelSimpleContactFormServiceProvider::class);
+        $this->app->register(\dnj\UserLogger\ServiceProvider::class);
+        $this->app->singleton(IFormManager::class, ContactManager::class);
     }
 
     public function boot()
@@ -33,9 +34,5 @@ class LaravelSimpleContactFormServiceProvider extends ServiceProvider
                      $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
                  });
         }
-    }
-
-    private function loadMigrations()
-    {
     }
 }
