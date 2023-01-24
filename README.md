@@ -1,4 +1,4 @@
-# Management user account and transaction inside laravel app
+# Management Contact Form
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -29,7 +29,7 @@ composer require dnj/laravel-simple-contact-form
 The package will automatically register itself.
 
 
-After this you can create the `accounts and transactions` table by running the migrations:
+After this you can create the `contacts` table by running the migrations:
 
 ```bash
 php artisan migrate
@@ -40,7 +40,95 @@ You can optionally publish the config file with:
 ```bash
 php artisan vendor:publish --provider="dnj\SimpleContactForm\SimpleContactFormServiceProvider" --tag="contact-config"
 ```
+## Config file
+```php
+ [
+    // If set True we will access to route api else we will not access
+   'route_enable' => true,
+   
+    // To set the prefix for route api
+   'route_prefix' => 'api',
+]
 
+```
+## Usage
+To use and management [CRUD][link-crud] contact package, the first thing you need to do is creating an object of then ContactManager class. which is accessed in the name space below.
+```bash
+use dnj\SimpleContactForm\ContactManager;
+
+$contactManager = new ContactManager();
+```
+
+To create a contact, you can use the store function in the ContactManager class. This function includes parameters that include:
+
+### params
+1.  userIp :  It is to save the IP address of the client who wants to register a contact. To get the client's IP, we use the current `\request()->ip()` command.
+2. contactChannels: It is for saving the type of contact. which is an array. This array contains a key. for example: `array('mobile') or array('email') or etc`
+3. message: It is for saving contact text.
+4. additionalDetails: This parameter is used to save more information. which is in the form of an array. for example: `array('priority' => 'high')`
+
+
+### Create new contact:
+```php
+<?php
+use dnj\SimpleContactForm\ContactManager;
+
+$contactManager = new ContactManager();
+
+$data = [
+        'userIp' => '127.0.0.1',
+        'contactChannels' => array ('email'),
+        'message' => 'this is a first contact',
+        'additionalDetails' => array('priority' => 'high')
+];
+
+$contactManager->store($data['userIp'], 
+      $data['contactChannels'], 
+      $data['message'], 
+      $data['additionalDetails']
+);
+```
+To update a contact, you can use the update function in the ContactManager class. This function includes two parameters that include
+
+### params
+1.  contactId :  ID of the contact we want to edit
+2.  changes: This parameter, which is in the form of an array, contains the information that we want to edit a specific contact.
+
+### update Contact:
+```php
+<?php
+use dnj\SimpleContactForm\ContactManager;
+use dnj\SimpleContactForm\Models\Contact;
+
+$contactManager = new ContactManager();
+
+$data = [
+        'userIp' => '127.0.0.1',
+        'contactChannels' => array ('email'),
+        'message' => 'this is a first contact',
+        'additionalDetails' => array('priority' => 'high')
+];
+$contact = Contact::query()
+                      ->findOrFail(1);
+
+$contactManager->update($contact->id, $data);
+```
+### Notes:
+The return value type of the function is store and update of contact model type.
+
+## Route Api
+
+| name    | Method | route name         | path                    | Description                | 
+|---------|--------|--------------------|-------------------------|----------------------------|
+| Index   | GET    | `contacts.index`   | `/contacts/{contacts}`  | Display a specific contact |
+| Store   | POST   | `contacts.store`   | `/contacts`             | Store a contact            |
+| Update  | PUT    | `contacts.update`  | `/contacts/{contacts}`  | Update a specific contact  |
+| Destroy | Delete | `contacts.destroy` | `/contacts/{contacts}`  | Destroy a specific contact |
+
+### Notes:
+1. In order to edit and delete a contact, the user needs to be `authenticated` beforehand, otherwise she will be faced with an error `unauthenticated`.
+
+2. In the `config/contact.php` file, you can define a desired prefix for your route api by giving a `route_prefix` value. for example `route_prefix: 'api'`.
 
 ## How to use package API
 
@@ -90,3 +178,4 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 [link-gitignore]: https://github.com/dnj/laravel-simple-contact-form/blob/master/.gitignore
 [link-phpcsfixer]: https://github.com/dnj/laravel-simple-contact-form/blob/master/.php-cs-fixer.php
 [link-author]: https://github.com/dnj
+[link-crud]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete

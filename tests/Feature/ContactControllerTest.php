@@ -9,19 +9,6 @@ use Illuminate\Testing\Fluent\AssertableJson;
 
 class ContactControllerTest extends TestCase
 {
-    public function testIndexValidation()
-    {
-        Contact::factory()
-               ->withContactChannels(['email'])
-               ->withAdditionalDetails(['key' => 'value'])
-               ->create();
-        $this->getJson(route('contacts.index'))
-             ->assertStatus(422)
-             ->assertJson(fn (AssertableJson $json) => $json->hasAll([
-                                                                          'errors.entryId',
-                                                                      ])
-                                                             ->etc());
-    }
 
     public function testIndex()
     {
@@ -29,7 +16,7 @@ class ContactControllerTest extends TestCase
                           ->withContactChannels(['email'])
                           ->withAdditionalDetails(['key' => 'value'])
                           ->create();
-        $this->getJson(route('contacts.index', ['entryId' => $contact->getID()]))
+        $this->getJson(route('contacts.index', ['contact' => $contact->getID()]))
              ->assertStatus(200)
              ->assertJson(function (AssertableJson $json) use ($contact) {
                  $json->where('data.user_ip', $contact->getUserIP());
@@ -143,10 +130,10 @@ class ContactControllerTest extends TestCase
                           ->withContactChannels(['email'])
                           ->withAdditionalDetails(['key' => 'value'])
                           ->create();
-        $this->deleteJson(route('contacts.delete', compact('contact')))
+        $this->deleteJson(route('contacts.destroy', compact('contact')))
              ->assertStatus(401);
         $this->actingAs($user);
-        $this->deleteJson(route('contacts.delete', compact('contact')))
+        $this->deleteJson(route('contacts.destroy', compact('contact')))
              ->assertStatus(204);
     }
 }

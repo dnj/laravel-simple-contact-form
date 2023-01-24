@@ -3,7 +3,6 @@
 namespace dnj\SimpleContactForm\Http\Controllers;
 
 use dnj\SimpleContactForm\ContactManager;
-use dnj\SimpleContactForm\Http\Requests\ContactRequest;
 use dnj\SimpleContactForm\Http\Requests\ContactStoreRequest;
 use dnj\SimpleContactForm\Http\Requests\ContactUpdateRequest;
 use dnj\SimpleContactForm\Http\Resources\ContactResource;
@@ -18,9 +17,9 @@ class ContactController extends Controller
     {
     }
 
-    public function index(ContactRequest $request)
+    public function index(Contact $contact)
     {
-        $contact = $this->contactManager->getFormEntryById($request->get('entryId'));
+        $contact = $this->contactManager->getFormEntryById($contact->id);
 
         return ContactResource::make($contact);
     }
