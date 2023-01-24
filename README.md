@@ -38,7 +38,7 @@ php artisan migrate
 You can optionally publish the config file with:
 
 ```bash
-php artisan vendor:publish --provider="dnj\SimpleContactForm\SimpleContactFormServiceProvider" --tag="contact-config"
+php artisan vendor:publish --provider="dnj\SimpleContactForm\SimpleContactFormServiceProvider" --tag="config"
 ```
 ## Config file
 ```php

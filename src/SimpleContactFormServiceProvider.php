@@ -22,7 +22,7 @@ class SimpleContactFormServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                                  __DIR__.'/../config/contact.php' => config_path('contact.php'),
-                             ], 'contact-config');
+                             ], 'config');
         }
     }
 
