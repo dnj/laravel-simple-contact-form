@@ -2,9 +2,10 @@
 
 namespace dnj\SimpleContactForm\Http\Requests;
 
+use dnj\SimpleContactForm\Rules\Scalar;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactStoreRequest extends FormRequest
+class FormStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,10 +15,11 @@ class ContactStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userIp' => ['required', 'ipv4'],
             'contactChannels' => ['required', 'array'],
-            'message' => ['required'],
+            'contactChannels.*' => ['string', 'required'],
+            'message' => ['required', 'string'],
             'additionalDetails' => ['required', 'array'],
+            'contactChannels.*' => ['required', new Scalar()],
         ];
     }
 }

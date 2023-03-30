@@ -3,17 +3,22 @@
 namespace dnj\SimpleContactForm\Models;
 
 use dnj\SimpleContactForm\Contracts\IFormEntry;
-use dnj\SimpleContactForm\Database\Factories\ContactFactory;
+use dnj\SimpleContactForm\Database\Factories\FormEntryFactory;
 use dnj\UserLogger\Concerns\Loggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model implements IFormEntry
+class FormEntry extends Model implements IFormEntry
 {
     use HasFactory;
     use Loggable;
+
+    protected static function newFactory()
+    {
+        return FormEntryFactory::new();
+    }
+
     protected $fillable = [
-        'user_ip',
         'contact_channels',
         'additional_details',
         'message',
@@ -43,7 +48,7 @@ class Contact extends Model implements IFormEntry
 
     public function getContactChannel(string $key): ?string
     {
-        // TODO: Implement getContactChannel() method.
+        return $this->contact_channels[$key] ?? null;
     }
 
     public function getMessage(): string
@@ -54,10 +59,5 @@ class Contact extends Model implements IFormEntry
     public function getAdditionalDetails(): array
     {
         return $this->additional_details;
-    }
-
-    protected static function newFactory()
-    {
-        return ContactFactory::new();
     }
 }

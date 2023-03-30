@@ -9,7 +9,7 @@ return new class() extends Migration {
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('user_ip');
+            $table->string('user_ip', 35); // To support both ipv4 and ipv6
             $table->json('contact_channels');
             $table->json('additional_details');
             $table->text('message');

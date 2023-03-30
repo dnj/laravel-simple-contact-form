@@ -1,8 +1,9 @@
 <?php
 
 return [
-	// If set True we will access to route api else we will not access
+    // Enable http restful routes.
     'route_enable' => true,
-	// To set the prefix for route api
-    'route_prefix' => 'api',
+
+    // Prefix of routes. By default routes register with /api/{prefix}/contact-form pattern.
+    'route_prefix' => null,
 ];

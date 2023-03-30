@@ -1,28 +1,27 @@
 <?php
 
-namespace dnj\SimpleContactForm\Test\Feature;
+namespace dnj\SimpleContactForm\Tests\Feature;
 
-use dnj\SimpleContactForm\Models\Contact;
-use dnj\SimpleContactForm\Test\Models\User;
-use dnj\SimpleContactForm\Test\TestCase;
+use dnj\SimpleContactForm\Models\FormEntry;
+use dnj\SimpleContactForm\Tests\Models\User;
+use dnj\SimpleContactForm\Tests\TestCase;
 use Illuminate\Testing\Fluent\AssertableJson;
 
-class ContactControllerTest extends TestCase
+class FormControllerTest extends TestCase
 {
-
     public function testIndex()
     {
-        $contact = Contact::factory()
+        $entry = FormEntry::factory()
                           ->withContactChannels(['email'])
                           ->withAdditionalDetails(['key' => 'value'])
                           ->create();
-        $this->getJson(route('contacts.index', ['contact' => $contact->getID()]))
+        $this->getJson(route('contacts.index', ['contact' => $entry->getID()]))
              ->assertStatus(200)
-             ->assertJson(function (AssertableJson $json) use ($contact) {
-                 $json->where('data.user_ip', $contact->getUserIP());
-                 $json->where('data.contact_channels', $contact->getContactChannels());
-                 $json->where('data.message', $contact->getMessage());
-                 $json->where('data.additional_details', $contact->getAdditionalDetails());
+             ->assertJson(function (AssertableJson $json) use ($entry) {
+                 $json->where('data.user_ip', $entry->getUserIP());
+                 $json->where('data.contact_channels', $entry->getContactChannels());
+                 $json->where('data.message', $entry->getMessage());
+                 $json->where('data.additional_details', $entry->getAdditionalDetails());
              });
     }
 
@@ -67,9 +66,8 @@ class ContactControllerTest extends TestCase
 
     public function testUpdateValidation()
     {
-        $user = User::factory()
-                    ->create();
-        $contact = Contact::factory()
+        $user = User::factory()->create();
+        $entry = FormEntry::factory()
                           ->withContactChannels(['email'])
                           ->withAdditionalDetails(['key' => 'value'])
                           ->create();
@@ -95,9 +93,8 @@ class ContactControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $user = User::factory()
-                    ->create();
-        $contact = Contact::factory()
+        $user = User::factory()->create();
+        $entry = FormEntry::factory()
                           ->withContactChannels(['email'])
                           ->withAdditionalDetails(['key' => 'value'])
                           ->create();
@@ -124,16 +121,14 @@ class ContactControllerTest extends TestCase
 
     public function testDelete()
     {
-        $user = User::factory()
-                    ->create();
-        $contact = Contact::factory()
-                          ->withContactChannels(['email'])
-                          ->withAdditionalDetails(['key' => 'value'])
-                          ->create();
-        $this->deleteJson(route('contacts.destroy', compact('contact')))
-             ->assertStatus(401);
+        $user = User::factory()->create();
+        $entry = FormEntry::factory()->create();
+        $url = route('contacts.destroy', ['formId' => $entry->getID()]);
+    
+        $this->deleteJson($url)->assertStatus(401);
+
         $this->actingAs($user);
-        $this->deleteJson(route('contacts.destroy', compact('contact')))
-             ->assertStatus(204);
+        $this->deleteJson($url)->assertStatus(204);
+        $this->assertModelMissing($entry);
     }
 }

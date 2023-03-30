@@ -1,18 +1,20 @@
 <?php
 
-namespace dnj\SimpleContactForm\Test;
+namespace dnj\SimpleContactForm\Tests;
 
 use dnj\SimpleContactForm\Contracts\IFormManager;
-use dnj\SimpleContactForm\SimpleContactFormServiceProvider;
+use dnj\SimpleContactForm\FormManager;
+use dnj\SimpleContactForm\ServiceProvider as SimpleContactFormServiceProvider;
+use dnj\UserLogger\ServiceProvider as UserLoggerServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
+    public function getFormManager(): FormManager
     {
-        parent::setUp();
+        return $this->app->make(IFormManager::class);
     }
 
     protected function defineDatabaseMigrations(): void
@@ -23,12 +25,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
+            UserLoggerServiceProvider::class,
             SimpleContactFormServiceProvider::class,
         ];
-    }
-
-    public function getContactManager(): IFormManager
-    {
-        return $this->app->make(IFormManager::class);
     }
 }

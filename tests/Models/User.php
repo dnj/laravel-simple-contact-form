@@ -1,6 +1,6 @@
 <?php
 
-namespace dnj\SimpleContactForm\Test\Models;
+namespace dnj\SimpleContactForm\Tests\Models;
 
 use dnj\SimpleContactForm\Test\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

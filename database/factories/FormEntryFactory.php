@@ -2,21 +2,23 @@
 
 namespace dnj\SimpleContactForm\Database\Factories;
 
-use dnj\SimpleContactForm\Models\Contact;
+use dnj\SimpleContactForm\Models\FormEntry;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends Factory<Contact>
  */
-class ContactFactory extends Factory
+class FormEntryFactory extends Factory
 {
-    protected $model = Contact::class;
+    protected $model = FormEntry::class;
 
     public function definition()
     {
         return [
             'user_ip' => fake()->ipv4,
-            'contact_channels' => null,
+            'contact_channels' => [
+                'email' => fake()->email,
+            ],
             'additional_details' => null,
             'message' => fake()->text(400),
         ];
@@ -29,6 +31,9 @@ class ContactFactory extends Factory
         ]);
     }
 
+    /**
+     * @param array<string,string> $contactChannels
+     */
     public function withContactChannels(array $contactChannels)
     {
         return $this->state(fn () => [
@@ -36,6 +41,9 @@ class ContactFactory extends Factory
         ]);
     }
 
+    /**
+     * @param array<string,scalar> $additionalDetails
+     */
     public function withAdditionalDetails(array $additionalDetails)
     {
         return $this->state(fn () => [

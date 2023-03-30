@@ -21,7 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "dnj\\SimpleContactForm\\Test\\": "tests/"
+            "dnj\\SimpleContactForm\\Tests\\": "tests/"
         }
     },
     "scripts": {
