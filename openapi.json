@@ -1,0 +1,252 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "z7ryd57k3m4hj"
+  },
+  "info": {
+    "title": "contact",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/contacts/{contactId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "contactId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Contact Info by User ID",
+        "tags": [
+          "contacts"
+        ],
+        "operationId": "get-contact",
+        "description": "Retrieve the information of the contact with the matching contact ID.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 142,
+                      "user_ip": "127.0.0.1",
+                      "contact_channels": [
+                        "email"
+                      ],
+                      "additional_details": [
+                        {
+                          "key": "value"
+                        }
+                      ],
+                      "message": "this is a test"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "summary": "create new contact",
+        "operationId": "post-contacts",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 142,
+                      "user_ip": "127.0.0.1",
+                      "contact_channels": [
+                        "email"
+                      ],
+                      "additional_details": [
+                        {
+                          "key": "value"
+                        }
+                      ],
+                      "message": "this is a test"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              }
+            }
+          },
+          "description": ""
+        },
+        "x-internal": true,
+        "deprecated": true
+      },
+      "put": {
+        "summary": "update contact",
+        "operationId": "put-contacts-contactId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 142,
+                      "user_ip": "127.0.0.1",
+                      "contact_channels": [
+                        "email"
+                      ],
+                      "additional_details": [
+                        {
+                          "key": "value"
+                        }
+                      ],
+                      "message": "this is a test"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              },
+              "examples": {
+                "Example 1": {
+                  "value": {
+                    "id": 142,
+                    "user_ip": "127.0.0.1",
+                    "contact_channels": [
+                      "email"
+                    ],
+                    "additional_details": [
+                      {
+                        "key": "value"
+                      }
+                    ],
+                    "message": "this is a test"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": "update contact by id",
+        "tags": [
+          "contacts"
+        ]
+      },
+      "delete": {
+        "summary": "delete contact",
+        "operationId": "delete-contacts-contactId",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "description": "delete contact",
+        "tags": [
+          "contact"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "contact": {
+        "title": "User",
+        "type": "object",
+        "examples": [
+          {
+            "id": 142,
+            "user_ip": "127.0.0.1",
+            "contact_channels": [
+              "email"
+            ],
+            "additional_details": [
+              {
+                "key": "value"
+              }
+            ],
+            "message": "this is a test"
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "user_ip": {
+            "type": "string"
+          },
+          "contact_channels": {
+            "type": "array",
+            "items": {}
+          },
+          "additional_details": {
+            "type": "array",
+            "format": "email",
+            "items": {}
+          },
+          "message": {
+            "type": "string",
+            "example": "1997-10-31"
+          }
+        },
+        "required": [
+          "id",
+          "user_ip",
+          "contact_channels",
+          "additional_details",
+          "message"
+        ],
+        "x-stoplight": {
+          "id": "01e6910ae670b"
+        }
+      }
+    }
+  }
+}

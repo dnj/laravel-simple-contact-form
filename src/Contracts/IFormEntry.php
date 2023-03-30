@@ -8,17 +8,21 @@ namespace dnj\SimpleContactForm\Contracts;
  */
 interface IFormEntry
 {
-	public function getID(): int;
-	public function getUserIP(): string;
-	/**
-	 * @return ContactChannels $contactBackChannels keys maybe 'email', 'cellphone' or any other string key.
-	 */
-	public function getContactChannels(): array;
-	public function getContactChannel(string $key): ?string;
-	public function getMessage(): string;
+    public function getID(): int;
 
-	/**
-	 * @return AdditionalDetails
-	 */
-	public function getAdditionalDetails(): array;
+    public function getUserIP(): string;
+
+    /**
+     * @return ContactChannels $contactBackChannels keys maybe 'email', 'cellphone' or any other string key
+     */
+    public function getContactChannels(): array;
+
+    public function getContactChannel(string $key): ?string;
+
+    public function getMessage(): string;
+
+    /**
+     * @return AdditionalDetails
+     */
+    public function getAdditionalDetails(): array;
 }
